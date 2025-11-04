@@ -9,7 +9,7 @@ The system generates dummy data, loads it into Snowflake, transforms it using db
 ##  System Architecture
 
 <p align="center">
-  <img src="./assets/system_design.png" alt="System Design Flowchart" width="700"/>
+  <img src="./system_design.png" alt="System Design Flowchart" width="700"/>
 </p>
 
 ---
