@@ -1,31 +1,60 @@
-# E-Commerce-Order-Data-Pipeline-
-<!-- E-Commerce Order Pipeline with Delayed Orders Alerting -->
-<div align="center">
+# E-Commerce-Order-Data-Pipeline-with-Delayed-Orders-Alert
+##  Data Pipeline System Design
 
-```mermaid
-flowchart TD
-    %% === Colours & Icons ===
-    classDef python   fill:#306998,stroke:#fff,color:#fff
-    classDef csv      fill:#fff,stroke:#666,color:#333
-    classDef snow     fill:#29B5E8,stroke:#fff,color:#fff
-    classDef dbt      fill:#FF694B,stroke:#fff,color:#fff
-    classDef airflow  fill:#017CEE,stroke:#fff,color:#fff
+This project demonstrates an end-to-end **data pipeline** using **Python**, **Snowflake**, **dbt**, and **Apache Airflow**.  
+The system generates dummy data, loads it into Snowflake, transforms it using dbt, and automates execution and alerting using Airflow.
 
-    %% === Nodes ===
-    A[ Dummy Data Creation<br/><small>Python script</small>]:::python
-    B1[customers.csv]:::csv
-    B2[orders.csv]:::csv
-    B3[shipments.csv]:::csv
+---
 
-    C[Snowflake: RAW Schema<br/><small>orders, customers, shipments tables</small>]:::snow
-    D[dbt<br/><small>Transformation using dbt</small>]:::dbt
-    E[Snowflake: ANALYTICS Schema<br/><small>via dbt: order_status view,<br/>transformed models</small>]:::snow
-    F[Apache Airflow DAG<br/><small>• Runs dbt hourly<br/>• Sends Email Alert if<br/> shipped > 48 hrs</small>]:::airflow
+##  System Architecture
 
-    %% === Flow ===
-    A --> B1 & B2 & B3
-    B1 & B2 & B3 --> C
-    C --> D
-    D --> E
-    E --> F
-    F -->|triggers hourly| D
+<p align="center">
+  <img src="./assets/system_design.png" alt="System Design Flowchart" width="700"/>
+</p>
+
+---
+
+##  Workflow Overview
+
+1. **Data Generation (Python)**  
+   - Python script creates dummy datasets:  
+     - `customers.csv`  
+     - `orders.csv`  
+     - `shipments.csv`
+
+2. **Data Loading (Snowflake RAW Schema)**  
+   - These CSVs are loaded into Snowflake under the **RAW schema**.  
+   - Tables: `customers`, `orders`, `shipments`.
+
+3. **Data Transformation (dbt)**  
+   - dbt transforms raw data into clean, analytical models.  
+   - Output stored in **Snowflake ANALYTICS schema**.  
+   - Includes transformed views like `order_status`.
+
+4. **Automation (Apache Airflow)**  
+   - Airflow DAG runs dbt transformations hourly.  
+   - Sends email alerts if any shipment is delayed by more than **48 hours**.
+
+---
+
+##  Tech Stack
+
+| Component        | Tool / Technology |
+|------------------|------------------|
+| Data Creation    | Python |
+| Data Warehouse   | Snowflake |
+| Data Transformation | dbt |
+| Orchestration & Alerts | Apache Airflow |
+
+---
+
+##  How to Run
+
+1. Generate dummy CSVs using the Python script.
+2. Load data into Snowflake (RAW schema).
+3. Run dbt models for transformation.
+4. Trigger Airflow DAG to automate checks & alerts.
+
+---
+
+📌 *Designed for showcasing modern data engineering workflow integration.*
